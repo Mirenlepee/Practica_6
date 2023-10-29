@@ -471,8 +471,8 @@ public class VentanaDatos  extends JFrame {
 	//PANEL
 
 	private void dibujarGrafico(Graphics2D grafico) {
-	        int anchoPanelDer = graficoMunis.getWidth();
-	        int altoPanelDer = graficoMunis.getHeight();
+	        int anchoPanelGraf = graficoMunis.getWidth();
+	        int altoPanelGraf = graficoMunis.getHeight();
 
 	        if(treeMunis.getSelectionPath() != null) {
 	            DefaultMutableTreeNode nodoSel = (DefaultMutableTreeNode) treeMunis.getSelectionPath().getLastPathComponent();
@@ -480,46 +480,44 @@ public class VentanaDatos  extends JFrame {
 	            if (nodoSel != null && nodoSel.isLeaf()) {
 	            provinciaSel = (String) nodoSel.getUserObject();
 	            }
-	       //System.out.println("provincia seleccionada" + provinciaSel);
 	       List<Municipio> municipiosEnProvincia = datosMunis.getMunicipiosEnProvincia(provinciaSel);
-	       //System.out.println("municipios de esta:" + municipiosEnProvincia);
-	       int poblacionProvincia = 0;
+	       int poblacionProv= 0;
 	       int poblacionTotal = 0;
 
 	       for (Municipio municipio : municipiosEnProvincia) {
-	           poblacionProvincia += municipio.getHabitantes();
+	           poblacionProv += municipio.getHabitantes();
 	       }
 
 	       for (Municipio municipio : datosMunis.getListaMunicipios()) {
 	           poblacionTotal += municipio.getHabitantes();
 	       }
 
-	       int anchoBarraProvincia = (anchoPanelDer / 2) - 20;
-	       int alturaMax = altoPanelDer - 40;
-	       double porcentajeProvincia = (double) poblacionProvincia / poblacionTotal;
-	       int alturaBarraProvincia = (int) (porcentajeProvincia * alturaMax);
-	       int xBarraProvincia = 10;
-	       int yBarraProvincia = altoPanelDer - alturaBarraProvincia;
+	       int anchoProv = (anchoPanelGraf / 2) - 20;
+	       int alturaMax = altoPanelGraf - 40;
+	       double porcentajeProv = (double) poblacionProv / poblacionTotal;
+	       int alturaProv = (int) (porcentajeProv * alturaMax);
+	       int xBarraProv = 10;
+	       int yBarraProv = altoPanelGraf - alturaProv;
 
 	       grafico.setColor(Color.GREEN);
-	       grafico.fillRect(xBarraProvincia, yBarraProvincia, anchoBarraProvincia, alturaBarraProvincia);
+	       grafico.fillRect(xBarraProv, yBarraProv, anchoProv, alturaProv);
 
 	       grafico.setColor(Color.BLACK);
-	       int ySeparador = yBarraProvincia;
+	       int ySeparador = yBarraProv;
 	       for (Municipio municipio : municipiosEnProvincia) {
-	           int alturaSeparador = (int) ((double) municipio.getHabitantes() / poblacionProvincia * alturaBarraProvincia);
-	           grafico.drawLine(xBarraProvincia, ySeparador, xBarraProvincia + anchoBarraProvincia, ySeparador);
-	           grafico.drawLine(xBarraProvincia, ySeparador + alturaSeparador, xBarraProvincia + anchoBarraProvincia, ySeparador + alturaSeparador);
+	           int alturaSeparador = (int) ((double) municipio.getHabitantes() / poblacionProv * alturaProv);
+	           grafico.drawLine(xBarraProv, ySeparador, xBarraProv + anchoProv, ySeparador);
+	           grafico.drawLine(xBarraProv, ySeparador + alturaSeparador, xBarraProv + anchoProv, ySeparador + alturaSeparador);
 	           ySeparador += alturaSeparador;
 	       }
 
-	       int anchoBarraEstado = (anchoPanelDer / 2) - 20;
-	       int xBarraEstado = xBarraProvincia + anchoBarraProvincia + 10;
-	       int alturaBarraEstado = alturaMax;
-	       int yBarraEstado = altoPanelDer - alturaBarraEstado;
+	       int anchoEstado = (anchoPanelGraf / 2) - 20;
+	       int xBarraEstado = xBarraProv + anchoProv + 10;
+	       int alturaEstado = alturaMax;
+	       int yBarraEstado = altoPanelGraf - alturaEstado;
 
 	       grafico.setColor(Color.BLUE);
-	       grafico.fillRect(xBarraEstado, yBarraEstado, anchoBarraEstado, alturaBarraEstado);
+	       grafico.fillRect(xBarraEstado, yBarraEstado, anchoEstado, alturaEstado);
 
 	       grafico.setColor(Color.BLACK);    
 	        }
